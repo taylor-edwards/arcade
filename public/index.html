@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tetris</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <style>
+      html,
+      body {
+        font-family: "Work Sans", sans-serif;
+        font-size: 20px;
+        line-height: 26px;
+        margin: 0;
+        padding: 0;
+      }
+      button {
+        appearance: none;
+        border: 0;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+      }
+      h1 {
+        font-size: 48px;
+        letter-spacing: 6px;
+        margin: 0;
+      }
+      h3 {
+        font-size: 20px;
+        letter-spacing: 1px;
+        margin: 0;
+      }
+      canvas {
+        border-radius: 2vw;
+        max-width: 100%;
+      }
+      .ui {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin: 20px;
+      }
+      .scoreboard {
+        margin: 50px 0 30px;
+        text-align: center;
+      }
+      .score {
+        margin: 12px 0 8px;
+      }
+      .spacer {
+        display: inline-block;
+        width: 10px;
+      }
+      .message {
+        font-size: 26px;
+        font-weight: bold;
+        letter-spacing: 2px;
+      }
+      .controls {
+        text-align: center;
+      }
+      .btn {
+        background: #f4f4f4;
+        border: 1px solid transparent;
+        border-radius: 6px;
+        margin: 0 2px 10px;
+        outline: 0;
+        padding: 8px 26px;
+      }
+      .legend {
+        box-sizing: border-box;
+        margin: 60px auto;
+        max-width: 400px;
+        padding: 0 20px;
+        width: 100%;
+      }
+      .legend dl {
+        align-items: baseline;
+        display: inline-grid;
+        grid-gap: 0 20px;
+        grid-template-columns: min-content max-content;
+      }
+      .legend dt,
+      .legend dd {
+        margin: 0;
+      }
+      .legend dt {
+        font-size: 0.85em;
+        letter-spacing: 0.05em;
+        white-space: nowrap;
+      }
+      .legend dd {
+        opacity: 0.9;
+      }
+      @media (pointer: fine) {
+        .btn:hover,
+        .btn:focus {
+          background: #e0e0e0;
+          border-color: #333;
+        }
+      }
+      @media (min-width: 1200px) {
+        canvas {
+          border-radius: 12px;
+        }
+        .ui {
+          gap: 25px;
+        }
+      }
+      @font-face {
+        font-family: "Work Sans";
+        font-weight: regular;
+        src: url("fonts/WorkSans-Regular.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Work Sans";
+        font-weight: bold;
+        src: url("fonts/WorkSans-Black.woff2") format("woff2");
+      }
+    </style>
+  </head>
+  <body>
+    <header class="scoreboard">
+      <h1>TETRIS</h1>
+      <p class="score">
+        <span class="score-lines">0 lines</span>
+        <span class="spacer"></span>
+        <span class="score-tetrises">0 tetrises</span>
+      </p>
+      <p class="message">&nbsp;</p>
+
+      <noscript>Enable JavaScript to play</noscript>
+    </header>
+
+
+    <div class="ui">
+      <div class="deck"></div>
+      <div class="game"></div>
+      <div class="queue"></div>
+    </div>
+
+    <div class="controls">
+      <div>
+        <button class="btn move-left" title="Move left">&larr;</button>
+        <button class="btn rotate-left" title="Rotate left">&#x21AA;</button>
+        <button class="btn rotate-right" title="Rotate right">&#x21A9;</button>
+        <button class="btn move-right" title="Move right">&rarr;</button>
+      </div>
+      <div>
+        <button class="btn hold" title="Hold">&#x1F5D8;</button>
+        <button class="btn drop" title="Drop">&darr;</button>
+        <button class="btn pause" title="Pause">&#x23EF;</button>
+      </div>
+    </div>
+
+    <div class="legend">
+      <h3>Keyboard controls</h3>
+      <dl>
+        <dt>&larr; LEFT / h</dt>
+        <dd>Move piece left</dd>
+
+        <dt>&rarr; RIGHT / l</dt>
+        <dd>Move piece right</dd>
+
+        <dt>&darr; DOWN / j</dt>
+        <dd>Move piece down</dd>
+
+        <dt>&uarr; UP / k</dt>
+        <dd>Rotate piece</dd>
+
+        <dt>SPACE</dt>
+        <dd>Drop piece</dd>
+
+        <dt>SHIFT</dt>
+        <dd>Hold/swap piece</dd>
+
+        <dt>ESCAPE</dt>
+        <dd>Pause game</dd>
+
+        <dt>DELETE</dt>
+        <dd>Start a new game</dd>
+      </dl>
+    </div>
+
+    <!-- <script src="./v0.js" type="module"></script> -->
+    <script src="./main.js" type="module"></script>
+  </body>
+</html>
