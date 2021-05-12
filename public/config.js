@@ -8,6 +8,8 @@ export default {
   autoAdvanceDelay: 750, // ms
   linesPerLevel: 10,
   queueSize: 3,
+  keyRepeatDelay: 200, // ms
+  keyRepeatRate: 16, // hz
   theme: {
     bgColor: "#f4f4f4",
     shapeColors: {

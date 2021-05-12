@@ -20,5 +20,3 @@ export const shuffle = (list) => {
   }
   return newList;
 };
-
-export const selectElements = (selector) => document.querySelectorAll(selector);
