@@ -60,9 +60,7 @@ export const createGame = () => {
       queueY += shape.curve.length + 1;
     });
 
-    state.deck.forEach((piece) =>
-      screens.deck.fillShape(piece.shape, [4 - piece.shape.curve[0].length, 1])
-    );
+    state.deck.forEach((piece) => screens.deck.fillShape(piece.shape, [1, 1]));
   });
 
   /**

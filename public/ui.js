@@ -17,11 +17,11 @@ export const createScreens = () => {
   );
 
   const queue = createCanvas(
-    cellSize * 5,
-    cellSize * config.queueSize * 4 + cellSize * 2
+    cellSize * 6,
+    cellSize * config.queueSize * 3 + cellSize
   );
 
-  const deck = createCanvas(cellSize * 5, cellSize * 6);
+  const deck = createCanvas(cellSize * 6, cellSize * 6);
 
   const bgColor = config.theme.bgColor;
 

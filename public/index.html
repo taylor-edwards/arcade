@@ -6,6 +6,7 @@
     <style>
       html,
       body {
+        background: #fafafa;
         font-family: "Work Sans", sans-serif;
         font-size: 20px;
         line-height: 26px;
@@ -32,13 +33,45 @@
       }
       canvas {
         border-radius: 2vw;
+        box-shadow: 0 5px 13px -5px rgba(0, 0, 0, 0.1),
+                    0 3px 8px -5px rgba(0, 0, 0, 0.1);
         max-width: 100%;
       }
       .ui {
         display: flex;
-        gap: 15px;
+        flex-wrap: nowrap;
+        gap: 12px;
         justify-content: center;
-        margin: 20px;
+        margin: 18px 12px;
+      }
+      .game,
+      .deck,
+      .queue {
+        margin-bottom: 8px;
+        position: relative;
+      }
+      .game::before {
+        content: attr(data-level);
+      }
+      .deck::before {
+        content: "Deck";
+      }
+      .queue::before {
+        content: "Queue";
+      }
+      .game::before,
+      .deck::before,
+      .queue::before {
+        font-size: 16px;
+        left: 0;
+        letter-spacing: 0.05em;
+        line-height: 1;
+        margin: 0 15px;
+        position: absolute;
+        text-transform: uppercase;
+        top: 0;
+        transform: translateY(-50%);
+        white-space: pre;
       }
       .scoreboard {
         margin: 50px 0 30px;
@@ -99,12 +132,17 @@
           border-color: #333;
         }
       }
-      @media (min-width: 1200px) {
+      @media (min-width: 768px) {
         canvas {
           border-radius: 12px;
         }
         .ui {
           gap: 25px;
+        }
+        .game,
+        .deck,
+        .queue {
+          margin-bottom: 15px;
         }
       }
       @font-face {
@@ -134,9 +172,11 @@
 
 
     <div class="ui">
-      <div class="deck"></div>
-      <div class="game"></div>
-      <div class="queue"></div>
+      <div class="game" data-level="Level 1"></div>
+      <div>
+        <div class="queue"></div>
+        <div class="deck"></div>
+      </div>
     </div>
 
     <div class="controls">

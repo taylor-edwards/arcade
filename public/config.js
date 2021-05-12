@@ -1,7 +1,7 @@
 export default {
   boardWidth: 10,
-  boardHeight: 18,
-  canvasWidth: 400,
+  boardHeight: 20,
+  canvasWidth: 350,
   startingPosition: [4, 0],
   settleDelay: 750, // ms
   hardSettleDelay: 150, // ms
@@ -11,15 +11,13 @@ export default {
   keyRepeatDelay: 200, // ms
   keyRepeatRate: 16, // hz
   theme: {
-    bgColor: "#f4f4f4",
-    shapeColors: {
-      s: "#e88",
-      i: "#88f",
-      z: "#8d8",
-      t: "#e8f",
-      o: "#ed8",
-      l: "#8df",
-      j: "#e96",
-    },
+    bgColor: "#fff",
+    red: "#e88",
+    blue: "#88f",
+    green: "#8d8",
+    purple: "#e8f",
+    yellow: "#ed8",
+    cyan: "#8df",
+    orange: "#e96",
   },
 };

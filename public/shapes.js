@@ -3,7 +3,7 @@ import config from "./config.js";
 export const shapes = {
   s: {
     type: "s",
-    color: config.theme.shapeColors.s,
+    color: config.theme.green,
     curve: [
       [0, 1, 1],
       [1, 1, 0],
@@ -11,12 +11,12 @@ export const shapes = {
   },
   i: {
     type: "i",
-    color: config.theme.shapeColors.i,
-    curve: [[1], [1], [1], [1]],
+    color: config.theme.cyan,
+    curve: [[1, 1, 1, 1]],
   },
   z: {
     type: "z",
-    color: config.theme.shapeColors.z,
+    color: config.theme.red,
     curve: [
       [1, 1, 0],
       [0, 1, 1],
@@ -24,7 +24,7 @@ export const shapes = {
   },
   t: {
     type: "t",
-    color: config.theme.shapeColors.t,
+    color: config.theme.purple,
     curve: [
       [1, 1, 1],
       [0, 1, 0],
@@ -32,7 +32,7 @@ export const shapes = {
   },
   o: {
     type: "o",
-    color: config.theme.shapeColors.o,
+    color: config.theme.yellow,
     curve: [
       [1, 1],
       [1, 1],
@@ -40,20 +40,18 @@ export const shapes = {
   },
   l: {
     type: "l",
-    color: config.theme.shapeColors.l,
+    color: config.theme.orange,
     curve: [
-      [1, 0],
-      [1, 0],
-      [1, 1],
+      [0, 0, 1],
+      [1, 1, 1],
     ],
   },
   j: {
     type: "j",
-    color: config.theme.shapeColors.j,
+    color: config.theme.blue,
     curve: [
-      [0, 1],
-      [0, 1],
-      [1, 1],
+      [1, 1, 1],
+      [0, 0, 1],
     ],
   },
 };

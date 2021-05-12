@@ -197,6 +197,12 @@ const updateScore = (score) => {
       score.tetrises === 1 ? "" : "es"
     }`;
   });
+  selectElements("[data-level]").forEach((div) =>
+    div.setAttribute(
+      "data-level",
+      `Level ${Math.floor(score.lines / config.linesPerLevel) + 1}`
+    )
+  );
 };
 
 const updateMessage = (msg = "\u00A0") =>
