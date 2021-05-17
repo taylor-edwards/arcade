@@ -106,23 +106,28 @@ export const createGame = () => {
     const rotatedShape = rotateShape(piece.shape, turns);
     let position;
 
-    // try to fit the rotated piece back onto the board in the same place,
-    // otherwise try nudging it one column at a time up until it finds a
-    // fitting position. first try leftward up to the shape's width then
-    // upward up to the shape's height.
-    const width = rotatedShape.curve[0].length;
-    for (let x = 0; x < width && typeof position === "undefined"; x++) {
-      const nextPosition = [piece.position[0] - x, piece.position[1]];
-      if (shapePositionIsValid(state.board, rotatedShape, nextPosition)) {
-        position = nextPosition;
-      }
-    }
-
-    const height = rotatedShape.curve.length;
-    for (let y = 0; y < height && typeof position === "undefined"; y++) {
-      const nextPosition = [piece.position[0], piece.position[1] - y];
-      if (shapePositionIsValid(state.board, rotatedShape, nextPosition)) {
-        position = nextPosition;
+    // try to fit the rotated piece back onto the board in the same place
+    const midpointX = Math.floor(
+      piece.position[0] + piece.shape.curve[0].length / 2
+    );
+    const anchor = [
+      Math.ceil(midpointX - rotatedShape.curve[0].length / 2),
+      piece.position[1],
+    ];
+    if (shapePositionIsValid(state.board, rotatedShape, anchor)) {
+      position = anchor;
+    } else {
+      // try nudging the piece one column at a time both left and right
+      const width = rotatedShape.curve[0].length;
+      for (let x = 0; x < width && typeof position === "undefined"; x++) {
+        const left = [piece.position[0] - x, piece.position[1]];
+        const right = [piece.position[0] + x, piece.position[1]];
+        
+        if (shapePositionIsValid(state.board, rotatedShape, left)) {
+          position = left;
+        } else if (shapePositionIsValid(state.board, rotatedShape, right)) {
+          position = right;
+        }
       }
     }
 
@@ -145,7 +150,7 @@ export const createGame = () => {
         .filter(({ shape, position }) =>
           shapePositionIsValid(state.board, shape, position)
         );
-      if (restorePieces.length > 0) {
+      if (restorePieces.length === state.deck.length) {
         state.deck = state.pieces;
         state.pieces = restorePieces;
       }

@@ -56,33 +56,32 @@ export const shapes = {
   },
 };
 
+/*
+ * flip the S block once:
+  [0, 1, 1]
+  [1, 1, 0]
+
+  [1, 0]
+  [1, 1]
+  [0, 1]
+
+ * flip the I block once:
+  [1,1,1,1]
+
+  [1]
+  [1]
+  [1]
+  [1]
+
+ * flip the J block once:
+  [0, 1]
+  [0, 1]
+  [1, 1]
+
+  [1, 0, 0]
+  [1, 1, 1]
+*/
 export const flipShape = (shape) => {
-  /*
-   * flip the S block once:
-    [0, 1, 1]
-    [1, 1, 0]
-
-    [1, 0]
-    [1, 1]
-    [0, 1]
-
-   * flip the I block once:
-    [1,1,1,1]
-
-    [1]
-    [1]
-    [1]
-    [1]
-
-   * flip the J block once:
-    [0, 1]
-    [0, 1]
-    [1, 1]
-
-    [1, 0, 0]
-    [1, 1, 1]
-  */
-
   const curve = [];
   // swap the width and height
   const height = shape.curve[0].length;
@@ -90,9 +89,9 @@ export const flipShape = (shape) => {
   for (let i = 0; i < height; i++) {
     const row = [];
     for (let j = 0; j < width; j++) {
-      row.push(shape.curve[j][i]);
+      row.unshift(shape.curve[j][i]);
     }
-    curve.push(row.reverse());
+    curve.push(row);
   }
   return {
     ...shape,
