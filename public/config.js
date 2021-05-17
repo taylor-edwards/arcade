@@ -3,10 +3,12 @@ export default {
   boardHeight: 20,
   canvasWidth: 350,
   startingPosition: [4, 0],
-  settleDelay: 750, // ms
-  hardSettleDelay: 150, // ms
-  autoAdvanceDelay: 750, // ms
+  initialSpeed: 1.0,
+  speedUpPerLevel: 1.25,
   linesPerLevel: 10,
+  autoAdvanceDelay: 700, // ms
+  settleDelay: 500, // ms
+  hardSettleDelay: 150, // ms
   queueSize: 3,
   keyRepeatDelay: 200, // ms
   keyRepeatRate: 16, // hz

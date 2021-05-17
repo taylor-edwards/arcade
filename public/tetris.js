@@ -17,8 +17,10 @@ const initialState = () => ({
   nextBag: generateBag(),
   drawIndex: 0,
   deck: [],
+  gameSpeed: config.initialSpeed,
   linesCleared: 0,
   tetrises: 0,
+  level: 1,
   gameOver: false,
 });
 
@@ -248,9 +250,12 @@ export const createGame = () => {
   let autoAdvance;
   const startAutoAdvance = () => {
     clearInterval(autoAdvance);
+    state.level = Math.floor(state.linesCleared / config.linesPerLevel);
+    state.gameSpeed =
+      config.initialSpeed * Math.pow(config.speedUpPerLevel, state.level);
     autoAdvance = setInterval(
-      controls.moveDown,
-      config.autoAdvanceDelay / (1 + state.linesCleared / config.linesPerLevel)
+      () => controls.moveDown(false),
+      config.autoAdvanceDelay / state.gameSpeed
     );
   };
   const stopAutoAdvance = () => clearInterval(autoAdvance);
@@ -306,9 +311,10 @@ export const createGame = () => {
       }
     },
     getScore: () => ({
+      gameOver: state.gameOver,
+      level: state.level + 1,
       lines: state.linesCleared,
       tetrises: state.tetrises,
-      gameOver: state.gameOver,
     }),
     moveLeft: () =>
       controlPieces((piece) =>
@@ -318,10 +324,10 @@ export const createGame = () => {
       controlPieces((piece) =>
         movePiece(piece, [piece.position[0] + 1, piece.position[1]])
       ),
-    moveDown: () =>
+    moveDown: (hardDrop = true) =>
       controlPieces(
         (piece) => movePiece(piece, [piece.position[0], piece.position[1] + 1]),
-        true
+        hardDrop
       ),
     drop: () => controlPieces((piece) => dropPiece(piece), true),
     rotateLeft: () => controlPieces((piece) => rotatePiece(piece, 3)),

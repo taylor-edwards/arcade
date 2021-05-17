@@ -198,10 +198,7 @@ const updateScore = (score) => {
     }`;
   });
   selectElements("[data-level]").forEach((div) =>
-    div.setAttribute(
-      "data-level",
-      `Level ${Math.floor(score.lines / config.linesPerLevel) + 1}`
-    )
+    div.setAttribute("data-level", `Level ${score.level}`)
   );
 };
 
@@ -214,7 +211,7 @@ const bindEvents = (game) =>
   game.on((eventName) => {
     switch (eventName) {
       case "START":
-        updateScore({ lines: 0, tetrises: 0 });
+        updateScore(game.getScore());
         updateMessage();
         break;
 
