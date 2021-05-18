@@ -17,13 +17,22 @@ button {
 }
 h1 {
   font-size: 48px;
-  letter-spacing: 6px;
+  letter-spacing: 3px;
   margin: 0;
 }
 h3 {
   font-size: 20px;
   letter-spacing: 1px;
   margin: 0;
+}
+a {
+  text-decoration: none;
+  color: #68a;
+  outline: 0;
+}
+a:hover,
+a:focus {
+  color: #3ae;
 }
 canvas {
   border-radius: 2vw;
