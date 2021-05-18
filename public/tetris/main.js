@@ -1,4 +1,5 @@
 import { selectElements } from "/util.js";
+import { updateMessage } from "/ui.js";
 import config from "/tetris/config.js";
 import { createGame } from "/tetris/tetris.js";
 
@@ -200,11 +201,6 @@ const updateScore = (score) => {
     div.setAttribute("data-level", `Level ${score.level}`)
   );
 };
-
-const updateMessage = (msg = "\u00A0") =>
-  selectElements(".message").forEach((div) => {
-    div.textContent = msg;
-  });
 
 const bindEvents = (game) =>
   game.on((eventName) => {

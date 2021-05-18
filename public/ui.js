@@ -1,3 +1,10 @@
+import {selectElements} from '/util.js';
+
+export const updateMessage = (msg = '\u00A0') =>
+  selectElements('.message').forEach(div => {
+    div.textContent = msg;
+  });
+
 const createCanvas = (width, height) => {
   const canvas = document.createElement('canvas');
   canvas.width = width;
