@@ -1,0 +1,151 @@
+html,
+body {
+  background: #fafafa;
+  font-family: "Work Sans", sans-serif;
+  font-size: 20px;
+  line-height: 26px;
+  margin: 0;
+  padding: 0;
+}
+button {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+h1 {
+  font-size: 48px;
+  letter-spacing: 6px;
+  margin: 0;
+}
+h3 {
+  font-size: 20px;
+  letter-spacing: 1px;
+  margin: 0;
+}
+canvas {
+  border-radius: 2vw;
+  box-shadow: 0 5px 13px -5px rgba(0, 0, 0, 0.1),
+              0 3px 8px -5px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+}
+.ui {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 12px;
+  justify-content: center;
+  margin: 18px 12px;
+}
+.game,
+.deck,
+.queue {
+  margin-bottom: 8px;
+  position: relative;
+}
+.game::before {
+  content: attr(data-level);
+}
+.deck::before {
+  content: "Deck";
+}
+.queue::before {
+  content: "Queue";
+}
+.game::before,
+.deck::before,
+.queue::before {
+  font-size: 16px;
+  left: 0;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  margin: 0 15px;
+  position: absolute;
+  text-transform: uppercase;
+  top: 0;
+  transform: translateY(-50%);
+  white-space: pre;
+}
+.scoreboard {
+  margin: 50px 0 30px;
+  text-align: center;
+}
+.score {
+  margin: 12px 0 8px;
+}
+.spacer {
+  display: inline-block;
+  width: 10px;
+}
+.message {
+  font-size: 26px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+.controls {
+  text-align: center;
+}
+.btn {
+  background: #f4f4f4;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  margin: 0 2px 10px;
+  outline: 0;
+  padding: 8px 26px;
+}
+.legend {
+  box-sizing: border-box;
+  margin: 60px auto;
+  max-width: 400px;
+  padding: 0 20px;
+  width: 100%;
+}
+.legend dl {
+  align-items: baseline;
+  display: inline-grid;
+  grid-gap: 0 20px;
+  grid-template-columns: min-content max-content;
+}
+.legend dt,
+.legend dd {
+  margin: 0;
+}
+.legend dt {
+  font-size: 0.85em;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.legend dd {
+  opacity: 0.9;
+}
+@media (pointer: fine) {
+  .btn:hover,
+  .btn:focus {
+    background: #e0e0e0;
+    border-color: #333;
+  }
+}
+@media (min-width: 768px) {
+  canvas {
+    border-radius: 12px;
+  }
+  .ui {
+    gap: 25px;
+  }
+  .game,
+  .deck,
+  .queue {
+    margin-bottom: 15px;
+  }
+}
+@font-face {
+  font-family: "Work Sans";
+  font-weight: regular;
+  src: url("fonts/WorkSans-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Work Sans";
+  font-weight: bold;
+  src: url("fonts/WorkSans-Black.woff2") format("woff2");
+}

@@ -1,3 +1,5 @@
+export const selectElements = (selector) => document.querySelectorAll(selector);
+
 export const range = (min, max) => {
   const arr = [];
   const delta = min > max ? -1 : 1;

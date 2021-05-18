@@ -1,7 +1,6 @@
-import config from "./config.js";
-import { createGame } from "./tetris.js";
-
-const selectElements = (selector) => document.querySelectorAll(selector);
+import { selectElements } from "/util.js";
+import config from "/tetris/config.js";
+import { createGame } from "/tetris/tetris.js";
 
 const bindUI = (game) => {
   selectElements(".game").forEach((div) =>

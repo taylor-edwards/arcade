@@ -1,4 +1,4 @@
-import config from "./config.js";
+import config from "/tetris/config.js";
 
 export const shapes = {
   s: {

@@ -1,55 +1,17 @@
-import config from "./config.js";
-
-const cellSize = config.canvasWidth / config.boardWidth;
-
 const createCanvas = (width, height) => {
-  const canvas = document.createElement("canvas");
+  const canvas = document.createElement('canvas');
   canvas.width = width;
   canvas.height = height;
-  const context = canvas.getContext("2d");
-  return { canvas, context };
+  const context = canvas.getContext('2d');
+  return {canvas, context};
 };
 
-export const createScreens = () => {
-  const board = createCanvas(
-    config.canvasWidth,
-    config.canvasWidth * (config.boardHeight / config.boardWidth)
-  );
-
-  const queue = createCanvas(
-    cellSize * 6,
-    cellSize * config.queueSize * 3 + cellSize
-  );
-
-  const deck = createCanvas(cellSize * 6, cellSize * 6);
-
-  const bgColor = config.theme.bgColor;
-
-  return {
-    board: {
-      ...board,
-      clearCanvas: clearCanvas(board.context, board.canvas, bgColor),
-      fillShape: fillShape(board.context),
-    },
-    queue: {
-      ...queue,
-      clearCanvas: clearCanvas(queue.context, queue.canvas, bgColor),
-      fillShape: fillShape(queue.context),
-    },
-    deck: {
-      ...deck,
-      clearCanvas: clearCanvas(deck.context, deck.canvas, bgColor),
-      fillShape: fillShape(deck.context),
-    },
-  };
-};
-
-export const clearCanvas = (context, canvas, fillColor) => () => {
+const clearCanvas = (context, canvas, fillColor) => () => {
   context.fillStyle = fillColor;
   context.fillRect(0, 0, canvas.width, canvas.height);
 };
 
-export const fillShape = (context) => (shape, position) => {
+const fillShape = (context, cellSize) => (shape, position) => {
   context.fillStyle = shape.color;
   shape.curve.forEach((row, rowOffset) => {
     row.forEach((cell, colOffset) => {
@@ -58,14 +20,29 @@ export const fillShape = (context) => (shape, position) => {
           (position[0] + colOffset) * cellSize,
           (position[1] + rowOffset) * cellSize,
           cellSize,
-          cellSize
+          cellSize,
         );
       }
     });
   });
 };
 
-export const createRenderer = (render) => {
+export const createScreens = (cellSize, bgColor, screenDims) =>
+  Object.fromEntries(
+    Object.entries(screenDims).map(([key, dims]) => {
+      const screen = createCanvas(dims[0], dims[1]);
+      return [
+        key,
+        {
+          ...screen,
+          clearCanvas: clearCanvas(screen.context, screen.canvas, bgColor),
+          fillShape: fillShape(screen.context, cellSize),
+        },
+      ];
+    }),
+  );
+
+export const createRenderer = render => {
   let interval = null;
   const stop = () => {
     clearInterval(interval);
@@ -80,7 +57,7 @@ export const createRenderer = (render) => {
   let lastFrameID;
   let renderInProgress = false;
   const handleRender = () => {
-    if (!renderInProgress && typeof state !== undefined) {
+    if (!renderInProgress) {
       renderInProgress = true;
       cancelAnimationFrame(lastFrameID);
       lastFrameID = requestAnimationFrame(() => {

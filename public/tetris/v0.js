@@ -1,4 +1,4 @@
-import { range, shuffle } from "./util.js";
+import { range, shuffle } from "/util.js";
 
 const boardWidth = 10;
 const boardHeight = 18;
