@@ -1,7 +1,21 @@
+:root {
+  --bg-color: 250, 250, 250;
+  --text-color: 0, 0, 0;
+  --link-color: 102, 136, 170;
+  --link-hover-color: 51, 170, 238;
+  --red: 238, 136, 136;
+  --blue: 136, 136, 250;
+  --green: 136, 221, 136;
+  --purple: 238, 136, 250;
+  --yellow: 238, 221, 136;
+  --cyan: 136, 221, 250;
+  --orange: 238, 153, 102;
+}
 html,
 body {
-  background: #fafafa;
   font-family: "Work Sans", sans-serif;
+  background: rgb(var(--bg-color));
+  color: rgb(var(--text-color));
   font-size: 20px;
   line-height: 26px;
   margin: 0;
@@ -27,18 +41,46 @@ h3 {
 }
 a {
   text-decoration: none;
-  color: #68a;
+  color: rgb(var(--link-color));
   outline: 0;
 }
 a:hover,
 a:focus {
-  color: #3ae;
+  color: rgb(var(--link-hover-color));
 }
-canvas {
-  border-radius: 2vw;
-  box-shadow: 0 5px 13px -5px rgba(0, 0, 0, 0.1),
-              0 3px 8px -5px rgba(0, 0, 0, 0.1);
-  max-width: 100%;
+nav {
+  font-weight: bold;
+  left: 0;
+  letter-spacing: 0.03em;
+  margin: 10px 20px;
+  position: absolute;
+  top: 0;
+}
+.column {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.square {
+  position: relative;
+  width: 100%;
+}
+.square > div {
+  padding-bottom: 100%;
+  height: 0;
+}
+.viewport {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 20px 40px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+.viewport.snake {
+  max-width: 800px;
+}
+.viewport.tetris {
+  max-width: 1000px;
 }
 .ui {
   display: flex;
@@ -76,6 +118,12 @@ canvas {
   transform: translateY(-50%);
   white-space: pre;
 }
+canvas {
+  border-radius: 2vw;
+  box-shadow: 0 5px 13px -5px rgba(0, 0, 0, 0.1),
+              0 3px  8px -5px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+}
 .scoreboard {
   margin: 50px 0 30px;
   text-align: center;
@@ -105,9 +153,8 @@ canvas {
 }
 .legend {
   box-sizing: border-box;
-  margin: 60px auto;
+  margin: 20px 0;
   max-width: 400px;
-  padding: 0 20px;
   width: 100%;
 }
 .legend dl {
@@ -138,6 +185,10 @@ canvas {
 @media (min-width: 768px) {
   canvas {
     border-radius: 12px;
+  }
+  .viewport {
+    grid-template-columns: 1fr 350px;
+    padding: 0 20px;
   }
   .ui {
     gap: 25px;

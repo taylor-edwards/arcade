@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Tetris</title>
+    <title>Play Tetris at The Arcade</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="/styles.css">
   </head>
   <body>
+    <nav>
+      <a href="/">&larr; The Arcade</a>
+    </nav>
+
     <header class="scoreboard">
       <h1>TETRIS</h1>
       <p class="score">
@@ -19,55 +23,59 @@
     </header>
 
 
-    <div class="ui">
-      <div class="game" data-level="Level 1"></div>
+    <div class="viewport tetris">
       <div>
-        <div class="queue"></div>
-        <div class="deck"></div>
+        <div class="ui">
+          <div class="game" data-level="Level 1"></div>
+          <div>
+            <div class="queue"></div>
+            <div class="deck"></div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <div>
+            <button class="btn move-left" title="Move left">&larr;</button>
+            <button class="btn rotate-left" title="Rotate left">&#x21AA;</button>
+            <button class="btn rotate-right" title="Rotate right">&#x21A9;</button>
+            <button class="btn move-right" title="Move right">&rarr;</button>
+          </div>
+          <div>
+            <button class="btn hold" title="Hold">&#x1F5D8;</button>
+            <button class="btn drop" title="Drop">&darr;</button>
+            <button class="btn pause" title="Pause">&#x23EF;</button>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="controls">
-      <div>
-        <button class="btn move-left" title="Move left">&larr;</button>
-        <button class="btn rotate-left" title="Rotate left">&#x21AA;</button>
-        <button class="btn rotate-right" title="Rotate right">&#x21A9;</button>
-        <button class="btn move-right" title="Move right">&rarr;</button>
+      <div class="legend">
+        <h3>Keyboard controls</h3>
+        <dl>
+          <dt>&larr; LEFT / h</dt>
+          <dd>Move piece left</dd>
+
+          <dt>&rarr; RIGHT / l</dt>
+          <dd>Move piece right</dd>
+
+          <dt>&darr; DOWN / j</dt>
+          <dd>Move piece down</dd>
+
+          <dt>&uarr; UP / k / i</dt>
+          <dd>Rotate piece</dd>
+
+          <dt>SPACE</dt>
+          <dd>Drop piece</dd>
+
+          <dt>SHIFT</dt>
+          <dd>Hold/swap piece</dd>
+
+          <dt>ESCAPE</dt>
+          <dd>Pause game</dd>
+
+          <dt>DELETE</dt>
+          <dd>Start new game</dd>
+        </dl>
       </div>
-      <div>
-        <button class="btn hold" title="Hold">&#x1F5D8;</button>
-        <button class="btn drop" title="Drop">&darr;</button>
-        <button class="btn pause" title="Pause">&#x23EF;</button>
-      </div>
-    </div>
-
-    <div class="legend">
-      <h3>Keyboard controls</h3>
-      <dl>
-        <dt>&larr; LEFT / h</dt>
-        <dd>Move piece left</dd>
-
-        <dt>&rarr; RIGHT / l</dt>
-        <dd>Move piece right</dd>
-
-        <dt>&darr; DOWN / j</dt>
-        <dd>Move piece down</dd>
-
-        <dt>&uarr; UP / k</dt>
-        <dd>Rotate piece</dd>
-
-        <dt>SPACE</dt>
-        <dd>Drop piece</dd>
-
-        <dt>SHIFT</dt>
-        <dd>Hold/swap piece</dd>
-
-        <dt>ESCAPE</dt>
-        <dd>Pause game</dd>
-
-        <dt>DELETE</dt>
-        <dd>Start new game</dd>
-      </dl>
     </div>
 
     <!-- <script src="./v0.js" type="module"></script> -->
