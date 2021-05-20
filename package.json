@@ -4,7 +4,7 @@
   "description": "",
   "main": "tetris.js",
   "scripts": {
-    "dev": "npx serve public"
+    "dev": "serve docs"
   },
   "keywords": [],
   "author": "",
