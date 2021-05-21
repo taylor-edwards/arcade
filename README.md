@@ -4,10 +4,10 @@ Arcade is a small collection of (you guessed it) arcade games built at a
 reasonably low effort, MVP-ish level development. Here's a list of games
 currently included:
 
-* [Tetris](http://motoroco.co/tetris)
-* [Snake](http://motoroco.co/snake)
+* [Tetris](https://arcade.motoroco.co/tetris)
+* [Snake](https://arcade.motoroco.co/snake)
 
-The [index page](http://motoroco.co) displays a directory of the games.
+The [index page](https://arcade.motoroco.co) displays a directory of the games.
 
 ## Development
 
