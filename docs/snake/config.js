@@ -1,6 +1,6 @@
 export default {
-  bgColor: '#fba',
-  snakeColor: '#09f',
+  bgColor: '#fff',
+  snakeColor: '#a6e',
   foodColor: '#3a5',
   movesPerSecond: 8,
   rowCount: 20,
