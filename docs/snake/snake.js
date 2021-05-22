@@ -79,8 +79,8 @@ export const createGame = () => {
   let autoMove;
   const handleMove = dir => {
     if (!state.paused && !state.gameOver) {
-      // don't allow moving backwards
-      if (!moveIsComplement(dir, state.direction)) {
+      // don't allow moving backwards and ignore repeated inputs
+      if (!moveIsComplement(dir, state.direction) && dir !== state.direction) {
         clearInterval(autoMove);
         state.direction = dir;
         const doMove = () => moveSnake(state.direction);
