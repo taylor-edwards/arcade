@@ -50,11 +50,8 @@ a:focus {
 }
 nav {
   font-weight: bold;
-  left: 0;
   letter-spacing: 0.03em;
   margin: 10px 20px;
-  position: absolute;
-  top: 0;
 }
 .column {
   align-items: center;
@@ -88,6 +85,7 @@ nav {
   gap: 12px;
   justify-content: center;
   margin: 18px 12px;
+  position: relative;
 }
 .game,
 .deck,
@@ -136,9 +134,22 @@ canvas {
   width: 10px;
 }
 .message {
+  align-items: center;
+  background: rgba(var(--bg-color), 0.6);
+  box-shadow: 0 0 0 20px rgba(var(--bg-color), 0.6);
+  display: flex;
   font-size: 26px;
   font-weight: bold;
+  height: 100%;
+  justify-content: center;
+  left: 0;
   letter-spacing: 2px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.message:empty {
+  display: none;
 }
 .controls {
   text-align: center;
@@ -153,7 +164,7 @@ canvas {
 }
 .legend {
   box-sizing: border-box;
-  margin: 20px 0;
+  margin: 20px;
   max-width: 400px;
   width: 100%;
 }
@@ -183,6 +194,11 @@ canvas {
   }
 }
 @media (min-width: 768px) {
+  nav {
+    left: 0;
+    position: absolute;
+    top: 0;
+  }
   canvas {
     border-radius: 12px;
   }

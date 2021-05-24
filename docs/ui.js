@@ -1,6 +1,6 @@
 import {selectElements} from '/util.js';
 
-export const updateMessage = (msg = '\u00A0') =>
+export const updateMessage = (msg = '') =>
   selectElements('.message').forEach(div => {
     div.textContent = msg;
   });
