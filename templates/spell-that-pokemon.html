@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ options['app_name'] }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="author" content="Taylor Edwards">
+    <meta name="description" content="A simple Pokémon spelling game. New challenges every day!">
+    <style>
+      @font-face {
+        font-family: 'Noto Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: local(''),
+             url('/static/fonts/noto-sans-v21-latin-regular.woff2') format('woff2'),
+             url('/static/fonts/noto-sans-v21-latin-regular.woff') format('woff');
+      }
+
+      @font-face {
+        font-family: 'Noto Sans';
+        font-style: normal;
+        font-weight: 700;
+        src: local(''),
+             url('/static/fonts/noto-sans-v21-latin-700.woff2') format('woff2'),
+             url('/static/fonts/noto-sans-v21-latin-700.woff') format('woff');
+      }
+
+      :root {
+        --fill: 237, 242, 248;
+        --text: 0, 0, 0;
+        --stroke: 168, 177, 187;
+        --blue: 0, 82, 222;
+        --dark-blue: 0, 51, 160;
+        --font-small: 16px;
+        --font-regular: 20px;
+        --font-large: 24px;
+        --v-gap: 15px;
+        --h-gap: 10px;
+      }
+
+      html,
+      body {
+        background: #BFC9D5;
+        color: rgb(var(--text));
+        font-family: 'Noto Sans', sans-serif;
+        font-size: var(--font-regular);
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        padding: 20px 20px 10px;
+      }
+
+      main {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+      }
+
+      header,
+      footer {
+        text-align: center;
+      }
+
+      header {
+        margin-bottom: var(--v-gap);
+      }
+
+      footer > p {
+        margin: 0;
+      }
+
+      h1,
+      p {
+        margin: 0 0 var(--v-gap);
+      }
+
+      h1 {
+        font-size: var(--font-large);
+      }
+
+      h2 {
+        font-size: var(--font-regular);
+      }
+
+      a,
+      a:link {
+        color: rgb(var(--blue));
+        text-decoration: none;
+      }
+
+      a:hover,
+      a:focus {
+        color: rgb(var(--dark-blue));
+        text-decoration: underline dashed;
+      }
+
+      button,
+      input,
+      label {
+        touch-action: manipulation;
+      }
+
+      button,
+      input {
+        color: inherit;
+        font-family: inherit;
+        padding: 0;
+      }
+
+      label {
+        cursor: pointer;
+        text-transform: uppercase;
+      }
+
+      label,
+      small {
+        font-size: var(--font-small);
+      }
+
+      svg {
+        fill: currentColor;
+      }
+
+      .wrapper {
+        position: relative;
+      }
+
+      .btn,
+      .input {
+        --opacity: 1;
+        appearance: none;
+        -webkit-appearance: none;
+        background: rgba(var(--fill), var(--opacity));
+        border: 4px solid rgba(var(--stroke), 1);
+        border-radius: 8px;
+        font-size: var(--font-large);
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        outline: 0;
+        position: relative;
+      }
+
+      .input {
+        box-sizing: border-box;
+        margin: var(--v-gap) 0;
+        max-width: 320px;
+        padding: 10px 20px;
+        text-transform: uppercase;
+        width: 100%;
+      }
+
+      .backspace {
+        appearance: none;
+        -webkit-appearance: none;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        opacity: 0.5;
+        outline: 0;
+        padding: 20px 10px;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 50px;
+      }
+
+      .backspace:hover,
+      .backspace:focus,
+      .backspace.pressed {
+        opacity: 1;
+      }
+
+      input[type="checkbox"] {
+        height: 0;
+        opacity: 0;
+        position: absolute;
+        width: 0;
+      }
+
+      .checkbox {
+        --opacity: 1;
+        background: rgba(var(--fill), var(--opacity));
+        border-radius: 4px;
+        border: 3px solid rgb(var(--stroke));
+        display: inline-block;
+        height: 18px;
+        margin: -2px 3px 0 0;
+        position: relative;
+        vertical-align: middle;
+        width: 18px;
+      }
+
+      input[type="checkbox"]:checked + .checkbox::after {
+        content: "✓";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      input[type="checkbox"]:focus + .checkbox,
+      label:hover .checkbox,
+      label:focus .checkbox {
+        --stroke: var(--blue);
+        --opacity: 0.7;
+      }
+
+      .btn {
+        cursor: pointer;
+        line-height: 50px;
+        text-align: center;
+        min-width: 40px;
+        padding-bottom: 3px;
+      }
+
+      .btn:hover,
+      .btn:focus {
+        --opacity: 0.7;
+      }
+
+      .btn.pressed  {
+        --stroke: var(--dark-blue);
+      }
+
+      .btn[data-letter=" "] {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .hints {
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 20px;
+        max-width: 560px;
+      }
+
+      .hint {
+        position: relative;
+        text-align: center;
+      }
+
+      .hint > img {
+        max-width: 70px;
+      }
+
+      .hint > p {
+        padding: 0 10px;
+      }
+
+      .hint.hidden > img {
+        visibility: hidden;
+      }
+
+      .solved-message {
+        text-align: center;
+      }
+
+      .solved-message.hidden {
+        display: none;
+      }
+
+      .keyboard {
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        grid-gap: var(--v-gap) var(--h-gap);
+        justify-content: center;
+        margin-bottom: var(--v-gap);
+        max-width: 280px;
+      }
+
+      .how-to-play {
+        margin: 30px 0 100px;
+        max-width: 33em;
+      }
+
+      @media (min-width: 600px) {
+        :root {
+          --font-large: 28px;
+        }
+
+        .hint > img {
+          max-width: 140px;
+        }
+      }
+
+      @media (pointer:fine) {
+        .btn:hover {
+          --stroke: var(--blue);
+        }
+
+        .btn:active {
+          --stroke: var(--dark-blue);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>{{ options['app_name'] }}</h1>
+    </header>
+
+    <main>
+      <p class="solved-message hidden">
+        <strong>You caught all {{ challenge['answers'] | length }} of today's&nbsp;Pokémon!</strong>
+        <br>
+        Come back tomorrow for another&nbsp;puzzle.
+      </p>
+      <div class="hints">
+        {% for answer in challenge['answers']  %}
+          <div class="hint" data-answer="{{ answer['word'] }}">
+            <img src="/static/masks/{{ answer['filename'] }}" alt="Pokémon hint sprite" />
+            <p><strong>???</strong></p>
+          </div>
+        {% endfor %}
+      </div>
+
+      <label class="wrapper">
+        <input type="checkbox" checked id="show-hints"><span class="checkbox"></span> Show hints
+      </label>
+      <div class="wrapper">
+        <input type="text" class="input" id="answer-input" />
+        <button type="button" class="backspace" title="Backspace" aria-label="Delete the last typed letter">
+          <svg viewBox="0 0 53 37">
+            <path d="M45,0 C49.418278,0 53,3.581722 53,8 L53,29 C53,33.418278 49.418278,37 45,37 L21.0447506,37 C18.88502,37 16.817042,36.1267746 15.3109431,34.5788397 L0,18.8425926 L15.2962605,2.52818479 C16.8086258,0.915153624 18.9211547,0 21.1322898,0 L45,0 Z M45,5 L21.1322898,5 C20.3031141,5 19.5109158,5.34318261 18.9437788,5.9480693 L6.91393982,18.7786366 L18.8945728,31.0920649 C19.4593598,31.6725405 20.2348516,32 21.0447506,32 L45,32 C46.6568542,32 48,30.6568542 48,29 L48,8 C48,6.34314575 46.6568542,5 45,5 Z M39.5857864,9.58578644 L42.4142136,12.4142136 L36.329,18.5 L42.4142136,24.5857864 L39.5857864,27.4142136 L33.5,21.329 L27.4142136,27.4142136 L24.5857864,24.5857864 L30.671,18.5 L24.5857864,12.4142136 L27.4142136,9.58578644 L33.5,15.671 L39.5857864,9.58578644 Z"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="keyboard">
+        {% for letter in challenge['letters'] %}
+          <button type="button" class="btn" data-letter="{{ letter }}">{{ letter.upper() }}</button>
+        {% endfor %}
+        <!-- Render punctuation buttons inline if whitespace doesn't appear in any solutions -->
+        {% if ' ' not in challenge['punctuation'] %}
+          {% for letter in challenge['punctuation'] %}
+            <button type="button" class="btn" data-letter="{{ letter }}">{{ letter }}</button>
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      <!-- Render 'Space' and punctuation in their own row with predetermined ordering -->
+      {% if ' ' in challenge['punctuation'] %}
+        <div class="keyboard">
+          {% if '\'' in challenge['punctuation'] %}
+            <button type="button" class="btn" data-letter="'">'</button>
+          {% endif %}
+          {% if '-' in challenge['punctuation'] %}
+            <button type="button" class="btn" data-letter="-">-</button>
+          {% endif %}
+
+          <button type="button" class="btn" data-letter=" ">Space</button>
+
+          {% if '.' in challenge['punctuation'] %}
+            <button type="button" class="btn" data-letter=".">.</button>
+          {% endif %}
+          {% if ':' in challenge['punctuation'] %}
+            <button type="button" class="btn" data-letter=":">:</button>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      <article class="how-to-play">
+        <h2>How to play</h2>
+        <p>Write as many Pokémon names as you can with the provided letters. Turn off hints for an extra challenge!</p>
+        <p>New puzzles daily.</p>
+      </article>
+    </main>
+
+    <footer>
+      <p><small>Made by <a href="https://github.com/taylor-edwards/">some&nbsp;big&nbsp;nerd</a></small></p>
+      <p><small>Pokémon names & images ©&nbsp;1995-2021&nbsp;Nintendo/Game&nbsp;Freak</small></p>
+    </footer>
+
+    <script>
+      const REVEAL_CLASSNAME = 'reveal'
+      const HIDDEN_CLASSNAME = 'hidden'
+      const PRESSED_CLASS_NAME = 'pressed'
+      const INPUT_MAX_LENGTH = 12
+
+      const answerInput = document.getElementById('answer-input')
+      const backspaceBtn = document.querySelector('.backspace')
+      const keyboardBtns = Array.from(document.querySelectorAll('.keyboard .btn'))
+      const hints = Array.from(document.querySelectorAll('.hint[data-answer]'))
+      const showHintsCheckbox = document.getElementById('show-hints')
+      const solvedMessage = document.querySelector('.solved-message')
+
+      const challenge = {{ challenge | tojson }}
+      const state = {
+        answer: '',
+        pressedKeyBtns: [],
+      }
+
+      const renderAnswer = () => {
+        answerInput.value = state.answer + '_'
+      }
+      renderAnswer()
+
+      const renderHintVisibility = () => {
+        hints.forEach(hintElement => {
+          if (!hintElement.classList.contains(REVEAL_CLASSNAME)) {
+            if (showHintsCheckbox.checked) {
+              hintElement.classList.remove(HIDDEN_CLASSNAME)
+            } else {
+              hintElement.classList.add(HIDDEN_CLASSNAME)
+            }
+          }
+        })
+      }
+      renderHintVisibility()
+
+      const findMatches = (() => {
+        const DELAY = 100
+        let timer = null
+        return () => {
+          clearTimeout(timer)
+          setTimeout(() => {
+            const matches = challenge.answers.filter(({ word }) => word === state.answer)
+            if (matches.length > 0) {
+              const unrevealedHints = hints.filter(el => !el.classList.contains(REVEAL_CLASSNAME))
+              let newAnswers = 0
+              matches.forEach(answer => {
+                const hintElement = unrevealedHints.find(el =>
+                  el.dataset.answer === state.answer && !el.classList.contains(REVEAL_CLASSNAME)
+                )
+                if (hintElement) {
+                  newAnswers += 1
+                  hintElement.classList.remove(HIDDEN_CLASSNAME)
+                  hintElement.classList.add(REVEAL_CLASSNAME)
+                  const img = hintElement.querySelector('img')
+                  const label = hintElement.querySelector('p')
+                  if (img) {
+                    img.src = `/static/sprites/${answer.filename}`
+                    img.alt = `${answer.line} sprite`
+                  }
+                  if (label) {
+                    label.textContent = answer.line
+                  }
+                }
+              })
+              if (unrevealedHints.length - newAnswers === 0) {
+                solvedMessage.classList.remove(HIDDEN_CLASSNAME)
+              }
+              if (newAnswers > 0) {
+                state.answer = ''
+                renderAnswer()
+              }
+            }
+          }, DELAY)
+        }
+      })()
+
+      const appendLetter = letter => {
+        if (state.answer.length < INPUT_MAX_LENGTH) {
+          state.answer += letter
+          renderAnswer()
+          findMatches()
+        }
+      }
+
+      answerInput.addEventListener('keydown', e => {
+        if (!e.ctrlKey && !e.altKey && !e.metaKey && e.key !== 'Tab') {
+          e.preventDefault()
+        }
+      })
+
+      const ignoreInput = e => e.preventDefault()
+      answerInput.addEventListener('paste', ignoreInput)
+      answerInput.addEventListener('touchstart', ignoreInput)
+      answerInput.addEventListener('touchend', ignoreInput)
+
+      const handleKeyboardPress = btn => e => {
+        e.preventDefault()
+        appendLetter(btn.dataset.letter)
+      }
+      keyboardBtns.forEach(btn => {
+        btn.addEventListener('mousedown', handleKeyboardPress(btn))
+        btn.addEventListener('touchstart', handleKeyboardPress(btn))
+      })
+
+      const handleBackspacePress = e => {
+        e.preventDefault()
+        e.stopPropagation()
+        state.answer = state.answer.slice(0, -1)
+        renderAnswer()
+      }
+      backspaceBtn.addEventListener('mousedown', handleBackspacePress)
+      backspaceBtn.addEventListener('touchstart', handleBackspacePress)
+
+      showHintsCheckbox.addEventListener('change', () => renderHintVisibility())
+
+      window.addEventListener('keydown', e => {
+        if (!e.ctrlKey && !e.altKey && !e.metaKey) {
+          const key = e.key.toLowerCase()
+          if (challenge.letters.includes(key) || challenge.punctuation.includes(key)) {
+            e.preventDefault()
+            const btn = keyboardBtns.find(el => el.dataset.letter === key)
+            if (btn) {
+              btn.classList.add(PRESSED_CLASS_NAME)
+              state.pressedKeyBtns.push(btn)
+            }
+            appendLetter(key)
+          } else if (key === 'backspace') {
+            handleBackspacePress(e)
+            backspaceBtn.classList.add(PRESSED_CLASS_NAME)
+            state.pressedKeyBtns.push(backspaceBtn)
+            findMatches()
+          } else if (key === 'escape') {
+            state.answer = ''
+            renderAnswer()
+          }
+        }
+      })
+
+      window.addEventListener('keyup', e => {
+        let btn
+        while (btn = state.pressedKeyBtns.pop()) {
+          btn.classList.remove(PRESSED_CLASS_NAME)
+        }
+      })
+    </script>
+  </body>
+</html>
