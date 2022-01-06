@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  app:
+    build: .
+    ports:
+      - "8084:5000"
+    volumes:
+      - ./logs:/app/logs:Z
+      - /etc/localtime:/etc/localtime:ro
