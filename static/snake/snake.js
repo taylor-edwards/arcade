@@ -8,6 +8,7 @@ const initialState = () => ({
   ),
   tail: [[9, 9]],
   direction: null,
+  nextDirection: null,
   paused: false,
   gameOver: false,
 });
@@ -57,9 +58,13 @@ export const createGame = () => {
     return particles.length;
   };
 
-  const moveSnake = dir => {
+  const moveSnake = () => {
     if (!state.gameOver) {
-      const tail = move(state.tail, dir);
+      if (state.nextDirection) {
+        state.direction = state.nextDirection;
+        state.nextDirection = null;
+      }
+      const tail = move(state.tail, state.direction);
       if (tail) {
         const didEat = eatParticles() > 0;
         if (didEat) {
@@ -76,22 +81,24 @@ export const createGame = () => {
     }
   };
 
-  let autoMove;
+  let autoMove = null;
   const handleMove = dir => {
     if (!state.paused && !state.gameOver) {
-      // don't allow moving backwards 
+      // don't allow moving backwards
       if (!moveIsComplement(dir, state.direction)) {
-        clearInterval(autoMove);
-        state.direction = dir;
-        const doMove = () => moveSnake(state.direction);
-        // ignore repeated inputs
-        if (dir !== state.direction) {
-          doMove();
-        }
-        autoMove = setInterval(doMove, 1000 / config.movesPerSecond);
+        // buffer the next input until the following frame is rendered by moveSnake()
+        state.nextDirection = dir;
+      }
+      if (autoMove === null) {
+        autoMove = setInterval(moveSnake, 1000 / config.movesPerSecond);
       }
     }
   };
+
+  const stopMoving = () => {
+    clearInterval(autoMove);
+    autoMove = null;
+  }
 
   let eventListeners = [];
   const emit = (...eventData) => eventListeners.forEach(fn => fn(...eventData));
@@ -107,21 +114,21 @@ export const createGame = () => {
       }
     },
     start: () => {
-      clearInterval(autoMove);
+      stopMoving();
       state = initialState();
       addParticle();
       renderer.start();
       emit('START');
     },
     stop: () => {
-      clearInterval(autoMove);
+      stopMoving();
       renderer.stop();
       emit('STOP');
     },
     pause: () => {
       // only pause if the game has started
       if (state.direction !== null) {
-        clearInterval(autoMove);
+        stopMoving();
         state.paused = true;
         emit('PAUSE');
       }
