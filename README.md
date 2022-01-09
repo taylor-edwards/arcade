@@ -1,12 +1,10 @@
-# Arcade
+![The Arcade](static/img/arcade@2x.png "The Arcade")
 
-Arcade is a small collection of simple games you can play in your browser. The selection currently includes:
+[The Arcade](https://arcade.motoroco.co) is a small collection of games you can play in your browser. The selection currently includes:
 
+* [Spell that Pokémon!](https://arcade.motoroco.co/spell-that-pokemon)
 * [Tetris](https://arcade.motoroco.co/tetris)
 * [Snake](https://arcade.motoroco.co/snake)
-* [Spell that Pokémon](https://arcade.motoroco.co/spell-that-pokemon)
-
-The [index page](https://arcade.motoroco.co) displays a directory of the games.
 
 ## Run locally
 

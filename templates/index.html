@@ -6,11 +6,54 @@
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1"
     />
-    <link rel="stylesheet" href="/static/styles.css" />
     <style>
+      body {
+        background: linear-gradient(0deg, #300c55, #9d55c4);
+        color: #fff;
+        font-family: sans-serif;
+        margin: 0;
+        min-height: 100vh;
+        padding: 0;
+      }
+      header,
+      footer {
+        text-align: center;
+      }
+      footer {
+        padding: 3px 0 4px;
+      }
       main {
+        flex-grow: 1;
         margin: 60px 0;
         padding: 0 60px;
+      }
+      img {
+        max-width: 100%;
+      }
+      svg {
+        fill: currentColor;
+        vertical-align: -2px;
+      }
+      a, a:link {
+        color: inherit;
+        font-weight: bold;
+        letter-spacing: 0.01em;
+        text-decoration: none;
+      }
+      a:hover, a:focus {
+        color: #ffd963;
+      }
+      .wrapper {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      .sr-only {
+        height: 0;
+        overflow: hidden;
+        pointer-events: none;
+        position: absolute;
+        width: 0;
       }
       .games {
         display: grid;
@@ -26,27 +69,49 @@
       .label {
         margin-top: 20px;
       }
+      .logo {
+        width: 500px;
+      }
+      .copyright {
+        opacity: 0.8;
+      }
     </style>
   </head>
   <body>
-    <header class="scoreboard">
-      <h1>The Arcade</h1>
-      <p>Easy to play games in your browser</p>
-      <noscript>JavaScript is required to play</noscript>
-    </header>
+    <div class="wrapper">
+      <header>
+        <h1>
+          <img alt="" role="presentation" src="/static/img/arcade@2x.png" class="logo">
+          <span class="sr-only">The Arcade</span>
+        </h1>
+        <noscript>JavaScript is required to play</noscript>
+      </header>
 
-    <main>
-      <ul class="games">
-        <li>
-          <a href="/spell-that-pokemon" class="label">Spell that Pokémon</a>
-        </li>
-        <li>
-          <a href="/tetris" class="label">Tetris</a>
-        </li>
-        <li>
-          <a href="/snake" class="label">Snake</a>
-        </li>
-      </ul>
-    </main>
+      <main>
+        <ul class="games">
+          <li>
+            <a href="/spell-that-pokemon" class="label">Spell that Pokémon!</a>
+          </li>
+          <li>
+            <a href="/tetris" class="label">Tetris</a>
+          </li>
+          <li>
+            <a href="/snake" class="label">Snake</a>
+          </li>
+        </ul>
+      </main>
+
+      <footer>
+        <p>
+          <a href="https://github.com/taylor-edwards/arcade">
+            <svg width="16px" height="16px" viewBox="0 0 16 16">
+              <path d="M8,-8.8817842e-16 C3.58,-8.8817842e-16 0,3.58 0,8 C0,11.54 2.29,14.53 5.47,15.59 C5.87,15.66 6.02,15.42 6.02,15.21 C6.02,15.02 6.01,14.39 6.01,13.72 C4,14.09 3.48,13.23 3.32,12.78 C3.23,12.55 2.84,11.84 2.5,11.65 C2.22,11.5 1.82,11.13 2.49,11.12 C3.12,11.11 3.57,11.7 3.72,11.94 C4.44,13.15 5.59,12.81 6.05,12.6 C6.12,12.08 6.33,11.73 6.56,11.53 C4.78,11.33 2.92,10.64 2.92,7.58 C2.92,6.71 3.23,5.99 3.74,5.43 C3.66,5.23 3.38,4.41 3.82,3.31 C3.82,3.31 4.49,3.1 6.02,4.13 C6.66,3.95 7.34,3.86 8.02,3.86 C8.7,3.86 9.38,3.95 10.02,4.13 C11.55,3.09 12.22,3.31 12.22,3.31 C12.66,4.41 12.38,5.23 12.3,5.43 C12.81,5.99 13.12,6.7 13.12,7.58 C13.12,10.65 11.25,11.33 9.47,11.53 C9.76,11.78 10.01,12.26 10.01,13.01 C10.01,14.08 10,14.94 10,15.21 C10,15.42 10.15,15.67 10.55,15.59 C13.8066385,14.4909163 15.9994292,11.4371033 16,8 C16,3.58 12.42,-8.8817842e-16 8,-8.8817842e-16 Z"></path>
+            </svg>
+            View on GitHub
+          </a>
+        </p>
+        <p class="copyright"><small>&copy; Taylor Edwards 2021-2022</small></p>
+      </footer>
+    </div>
   </body>
 </html>

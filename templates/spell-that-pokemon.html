@@ -2,7 +2,7 @@
 <html lang="en-US">
   <head>
     <meta charset="utf-8">
-    <title>{{ options['app_name'] }}</title>
+    <title>{{ options['app_name'] }} &ndash; The Arcade</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <meta name="author" content="Taylor Edwards">
     <meta name="description" content="A simple Pokémon spelling game. New challenges every day!">
@@ -76,6 +76,11 @@
         margin: 0;
       }
 
+      nav {
+        font-weight: bold;
+        letter-spacing: 0.03em;
+      }
+
       h1,
       p {
         margin: 0 0 var(--v-gap);
@@ -124,8 +129,24 @@
         font-size: var(--font-small);
       }
 
+      img {
+        max-width: 100%;
+      }
+
       svg {
         fill: currentColor;
+      }
+
+      .sr-only {
+        height: 0;
+        overflow: hidden;
+        pointer-events: none;
+        position: absolute;
+        width: 0;
+      }
+
+      .logo {
+        width: 300px;
       }
 
       .wrapper {
@@ -294,6 +315,15 @@
         }
       }
 
+      @media (min-width: 768px) {
+        nav {
+          left: 0;
+          margin: 10px 20px;
+          position: absolute;
+          top: 0;
+        }
+      }
+
       @media (pointer:fine) {
         .btn:hover {
           --stroke: var(--blue);
@@ -306,13 +336,20 @@
     </style>
   </head>
   <body>
+    <nav>
+      <a href="/">The Arcade</a>
+    </nav>
+
     <header>
-      <h1>{{ options['app_name'] }}</h1>
+      <h1>
+        <img alt="" src="/static/img/spell-that-pokemon@2x.png" class="logo">
+        <span class="sr-only">{{ options['app_name'] }}</span>
+      </h1>
     </header>
 
     <main>
       <p class="solved-message hidden">
-        <strong>You caught all {{ challenge['answers'] | length }} of today's&nbsp;Pokémon!</strong>
+        <strong>You caught {{ challenge['answers'] | length }}&nbsp;Pokémon!</strong>
         <br>
         Come back tomorrow for another&nbsp;puzzle.
       </p>

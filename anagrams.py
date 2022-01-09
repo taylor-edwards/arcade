@@ -5,7 +5,7 @@ import generator
 
 DICTIONARIES = {
     'pokemon': {
-        'app_name': 'Spell that Pokémon',
+        'app_name': 'Spell that Pokémon!',
         'filename': 'pokemon.csv',
         'max_unique_characters': 10,
         'min_results_count': 3

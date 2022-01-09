@@ -1,3 +1,19 @@
+@font-face {
+  font-family: "Noto Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: local(""),
+       url("/static/fonts/noto-sans-v21-latin-regular.woff2") format("woff2"),
+       url("/static/fonts/noto-sans-v21-latin-regular.woff") format("woff");
+}
+@font-face {
+  font-family: "Noto Sans";
+  font-style: normal;
+  font-weight: 900;
+  src: local(""),
+       url("/static/fonts/noto-sans-v21-latin-700.woff2") format("woff2"),
+       url("/static/fonts/noto-sans-v21-latin-700.woff") format("woff");
+}
 :root {
   --bg-color: 230, 230, 230;
   --text-color: 0, 0, 0;
@@ -13,7 +29,7 @@
 }
 html,
 body {
-  font-family: "Work Sans", sans-serif;
+  font-family: "Noto Sans", sans-serif;
   background: rgb(var(--bg-color));
   color: rgb(var(--text-color));
   font-size: 20px;
@@ -52,6 +68,13 @@ nav {
   font-weight: bold;
   letter-spacing: 0.03em;
   margin: 10px 20px;
+}
+.sr-only {
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  width: 0;
 }
 .column {
   align-items: center;
@@ -206,14 +229,4 @@ canvas {
   .queue {
     margin-bottom: 15px;
   }
-}
-@font-face {
-  font-family: "Work Sans";
-  font-weight: regular;
-  src: url("/static/fonts/WorkSans-Regular.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Work Sans";
-  font-weight: bold;
-  src: url("/static/fonts/WorkSans-Black.woff2") format("woff2");
 }
