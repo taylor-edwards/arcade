@@ -1,16 +1,16 @@
-import {selectElements} from '/static/util.js';
-import {updateMessage} from '/static/ui.js';
-import {createGame} from '/static/snake/snake.js';
+import { selectElements } from '/static/util.js';
+import { initJoystick, updateMessage } from '/static/ui.js';
+import { createGame } from '/static/snake/snake.js';
 
 const bindUI = game =>
   selectElements('.game').forEach(div => div.appendChild(game.screen.canvas));
 
 const bindControls = game => {
   [
-    ['.move-left', game.moveLeft],
-    ['.move-right', game.moveRight],
-    ['.move-up', game.moveUp],
-    ['.move-down', game.moveDown],
+    ['.move-left', game.turnLeft],
+    ['.move-right', game.turnRight],
+    ['.move-up', game.turnUp],
+    ['.move-down', game.turnDown],
     ['.pause', game.togglePause],
   ].forEach(([selector, handler]) =>
     selectElements(selector).forEach(div =>
@@ -23,21 +23,21 @@ const bindControls = game => {
   );
 
   const keys = {
-    ArrowLeft: game.moveLeft,
-    h: game.moveLeft,
-    H: game.moveLeft,
+    ArrowLeft: game.turnLeft,
+    h: game.turnLeft,
+    H: game.turnLeft,
 
-    ArrowRight: game.moveRight,
-    l: game.moveRight,
-    L: game.moveRight,
+    ArrowRight: game.turnRight,
+    l: game.turnRight,
+    L: game.turnRight,
 
-    ArrowUp: game.moveUp,
-    k: game.moveUp,
-    K: game.moveUp,
+    ArrowUp: game.turnUp,
+    k: game.turnUp,
+    K: game.turnUp,
 
-    ArrowDown: game.moveDown,
-    j: game.moveDown,
-    J: game.moveDown,
+    ArrowDown: game.turnDown,
+    j: game.turnDown,
+    J: game.turnDown,
 
     Delete: game.start,
     Backspace: game.start,
@@ -53,6 +53,26 @@ const bindControls = game => {
       handler();
     }
   });
+
+  const joystick = document.getElementById('joystick');
+  if (joystick) {
+    initJoystick(joystick, dir => {
+      switch (dir) {
+        case 'up':
+          game.turnUp();
+          break;
+        case 'down':
+          game.turnDown();
+          break;
+        case 'left':
+          game.turnLeft();
+          break;
+        case 'right':
+          game.turnRight();
+          break;
+      }
+    });
+  }
 };
 
 const updateScore = score =>

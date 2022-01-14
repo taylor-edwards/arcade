@@ -181,7 +181,6 @@ canvas {
   box-sizing: border-box;
   margin: 20px;
   max-width: 400px;
-  width: 100%;
 }
 .legend dl {
   align-items: baseline;
@@ -200,6 +199,58 @@ canvas {
 }
 .legend dd {
   opacity: 0.9;
+}
+.joystick--wrapper {
+  height: 60px;
+  margin-bottom: 40px;
+  position: relative;
+}
+.joystick {
+  --offset-y: 0;
+  --offset-x: 0;
+  --offset-c: 10px;
+  background: #fff;
+  border: 2px solid transparent;
+  border-radius: 60px;
+  box-shadow: 0 5px 11px -8px rgba(0, 0, 0, 0.25);
+  cursor: grab;
+  height: 60px;
+  left: 50%;
+  margin: var(--offset-y) 0 0 var(--offset-x);
+  padding: 0;
+  position: absolute;
+  top: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  transition: margin 100ms ease-out;
+  width: 60px;
+}
+.joystick:hover,
+.joystick:focus {
+  border-color: #0577e8;
+}
+.joystick:active {
+  box-shadow: 0 3px 11px -5px rgba(0, 0, 0, 0.5);
+  cursor: grabbing;
+}
+.joystick[data-dir="up"] {
+  --offset-y: calc(var(--offset-c) * -1);
+}
+.joystick[data-dir="down"] {
+  --offset-y: var(--offset-c);
+}
+.joystick[data-dir="left"] {
+  --offset-x: calc(var(--offset-c) * -1);
+}
+.joystick[data-dir="right"] {
+  --offset-x: var(--offset-c);
+}
+.joystick--arrows {
+  left: 0;
+  height: 58px;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  width: 58px;
 }
 @media (pointer: fine) {
   .btn:hover,

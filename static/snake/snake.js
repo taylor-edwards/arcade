@@ -82,7 +82,7 @@ export const createGame = () => {
   };
 
   let autoMove = null;
-  const handleMove = dir => {
+  const startMovement = dir => {
     if (!state.paused && !state.gameOver) {
       // don't allow moving backwards
       if (!moveIsComplement(dir, state.direction)) {
@@ -135,7 +135,7 @@ export const createGame = () => {
     },
     resume: () => {
       state.paused = false;
-      handleMove(state.direction);
+      startMovement(state.direction);
       emit('RESUME');
     },
     togglePause: () => {
@@ -150,10 +150,10 @@ export const createGame = () => {
       }
     },
     getScore: () => ({points: state.tail.length - 1}),
-    moveUp: () => handleMove(directions.UP),
-    moveDown: () => handleMove(directions.DOWN),
-    moveLeft: () => handleMove(directions.LEFT),
-    moveRight: () => handleMove(directions.RIGHT),
+    turnUp: () => startMovement(directions.UP),
+    turnDown: () => startMovement(directions.DOWN),
+    turnLeft: () => startMovement(directions.LEFT),
+    turnRight: () => startMovement(directions.RIGHT),
   };
 
   return {
