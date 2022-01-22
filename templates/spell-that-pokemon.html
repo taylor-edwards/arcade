@@ -33,7 +33,7 @@
         --dark-blue: 0, 51, 160;
         --font-small: 16px;
         --font-regular: 20px;
-        --font-large: 24px;
+        --font-large: 28px;
         --v-gap: 15px;
         --h-gap: 10px;
       }
@@ -53,7 +53,7 @@
         display: flex;
         flex-direction: column;
         min-height: 100vh;
-        padding: 20px 20px 10px;
+        padding: var(--v-gap) 0;
       }
 
       main {
@@ -68,10 +68,6 @@
         text-align: center;
       }
 
-      header {
-        margin-bottom: var(--v-gap);
-      }
-
       footer > p {
         margin: 0;
       }
@@ -81,13 +77,13 @@
         letter-spacing: 0.03em;
       }
 
-      h1,
       p {
         margin: 0 0 var(--v-gap);
       }
 
       h1 {
         font-size: var(--font-large);
+        margin: 0;
       }
 
       h2 {
@@ -151,6 +147,10 @@
 
       .wrapper {
         position: relative;
+      }
+
+      .row {
+        padding: 0 20px;
       }
 
       .btn,
@@ -262,7 +262,7 @@
         flex-wrap: wrap;
         justify-content: center;
         margin-bottom: 20px;
-        max-width: 560px;
+        max-width: 540px;
       }
 
       .hint {
@@ -271,11 +271,29 @@
       }
 
       .hint > img {
-        max-width: 70px;
+        max-width: 90px;
       }
 
       .hint > p {
         padding: 0 10px;
+        position: relative;
+      }
+
+      .answer.hidden {
+        visibility: hidden;
+      }
+
+      .answer.hidden + .placeholder {
+        display: block;
+      }
+
+      .placeholder {
+        display: none;
+        font-weight: bold;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
       }
 
       .hint.hidden > img {
@@ -305,11 +323,7 @@
         max-width: 33em;
       }
 
-      @media (min-width: 600px) {
-        :root {
-          --font-large: 28px;
-        }
-
+      @media (min-width: 480px) {
         .hint > img {
           max-width: 140px;
         }
@@ -336,7 +350,7 @@
     </style>
   </head>
   <body>
-    <nav>
+    <nav class="row">
       <a href="/">The Arcade</a>
     </nav>
 
@@ -348,7 +362,7 @@
     </header>
 
     <main>
-      <p class="solved-message hidden">
+      <p class="solved-message hidden" aria-live="polite" role="none" aria-hidden="true">
         <strong>You caught {{ challenge['answers'] | length }}&nbsp;Pokémon!</strong>
         <br>
         Come back tomorrow for another&nbsp;puzzle.
@@ -357,7 +371,10 @@
         {% for answer in challenge['answers']  %}
           <div class="hint" data-answer="{{ answer['word'] }}">
             <img src="/static/masks/{{ answer['filename'] }}" alt="Pokémon hint sprite" />
-            <p><strong>???</strong></p>
+            <p aria-live="assertive">
+              <span class="answer hidden" role="none" aria-hidden="true">{{ answer['line'] }}</span>
+              <span class="placeholder">?</span>
+            </p>
           </div>
         {% endfor %}
       </div>
@@ -365,13 +382,15 @@
       <label class="wrapper">
         <input type="checkbox" checked id="show-hints"><span class="checkbox"></span> Show hints
       </label>
-      <div class="wrapper">
-        <input type="text" class="input" id="answer-input" />
-        <button type="button" class="backspace" title="Backspace" aria-label="Delete the last typed letter">
-          <svg viewBox="0 0 53 37">
-            <path d="M45,0 C49.418278,0 53,3.581722 53,8 L53,29 C53,33.418278 49.418278,37 45,37 L21.0447506,37 C18.88502,37 16.817042,36.1267746 15.3109431,34.5788397 L0,18.8425926 L15.2962605,2.52818479 C16.8086258,0.915153624 18.9211547,0 21.1322898,0 L45,0 Z M45,5 L21.1322898,5 C20.3031141,5 19.5109158,5.34318261 18.9437788,5.9480693 L6.91393982,18.7786366 L18.8945728,31.0920649 C19.4593598,31.6725405 20.2348516,32 21.0447506,32 L45,32 C46.6568542,32 48,30.6568542 48,29 L48,8 C48,6.34314575 46.6568542,5 45,5 Z M39.5857864,9.58578644 L42.4142136,12.4142136 L36.329,18.5 L42.4142136,24.5857864 L39.5857864,27.4142136 L33.5,21.329 L27.4142136,27.4142136 L24.5857864,24.5857864 L30.671,18.5 L24.5857864,12.4142136 L27.4142136,9.58578644 L33.5,15.671 L39.5857864,9.58578644 Z"></path>
-          </svg>
-        </button>
+      <div class="row">
+        <div class="wrapper">
+          <input type="text" class="input" id="answer-input" />
+          <button type="button" class="backspace" title="Backspace" aria-label="Backspace">
+            <svg viewBox="0 0 53 37">
+              <path d="M45,0 C49.418278,0 53,3.581722 53,8 L53,29 C53,33.418278 49.418278,37 45,37 L21.0447506,37 C18.88502,37 16.817042,36.1267746 15.3109431,34.5788397 L0,18.8425926 L15.2962605,2.52818479 C16.8086258,0.915153624 18.9211547,0 21.1322898,0 L45,0 Z M45,5 L21.1322898,5 C20.3031141,5 19.5109158,5.34318261 18.9437788,5.9480693 L6.91393982,18.7786366 L18.8945728,31.0920649 C19.4593598,31.6725405 20.2348516,32 21.0447506,32 L45,32 C46.6568542,32 48,30.6568542 48,29 L48,8 C48,6.34314575 46.6568542,5 45,5 Z M39.5857864,9.58578644 L42.4142136,12.4142136 L36.329,18.5 L42.4142136,24.5857864 L39.5857864,27.4142136 L33.5,21.329 L27.4142136,27.4142136 L24.5857864,24.5857864 L30.671,18.5 L24.5857864,12.4142136 L27.4142136,9.58578644 L33.5,15.671 L39.5857864,9.58578644 Z"></path>
+            </svg>
+          </button>
+        </div>
       </div>
       <div class="keyboard">
         {% for letter in challenge['letters'] %}
@@ -406,7 +425,7 @@
         </div>
       {% endif %}
 
-      <article class="how-to-play">
+      <article class="how-to-play row">
         <h2>How to play</h2>
         <p>Write as many Pokémon names as you can with the provided letters. Turn off hints for an extra challenge!</p>
         <p>New puzzles daily.</p>
@@ -456,7 +475,7 @@
       renderHintVisibility()
 
       const findMatches = (() => {
-        const DELAY = 100
+        const DELAY = 60
         let timer = null
         return () => {
           clearTimeout(timer)
@@ -473,19 +492,24 @@
                   newAnswers += 1
                   hintElement.classList.remove(HIDDEN_CLASSNAME)
                   hintElement.classList.add(REVEAL_CLASSNAME)
-                  const img = hintElement.querySelector('img')
-                  const label = hintElement.querySelector('p')
-                  if (img) {
-                    img.src = `/static/sprites/${answer.filename}`
-                    img.alt = `${answer.line} sprite`
+                  const imageElement = hintElement.querySelector('img')
+                  const answerElement = hintElement.querySelector('.answer')
+                  const placeholder = hintElement.querySelector('.placeholder')
+                  if (imageElement) {
+                    imageElement.src = `/static/sprites/${answer.filename}`
+                    imageElement.alt = `${answer.line} sprite`
                   }
-                  if (label) {
-                    label.textContent = answer.line
+                  if (answerElement) {
+                    answerElement.classList.remove('hidden')
+                    answerElement.removeAttribute('role')
+                    answerElement.removeAttribute('aria-hidden')
                   }
                 }
               })
               if (unrevealedHints.length - newAnswers === 0) {
                 solvedMessage.classList.remove(HIDDEN_CLASSNAME)
+                solvedMessage.removeAttribute('role')
+                solvedMessage.removeAttribute('aria-hidden')
               }
               if (newAnswers > 0) {
                 state.answer = ''
