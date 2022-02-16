@@ -1,15 +1,13 @@
 import re
 import string
 import unicodedata
-from random import choice
+from random import shuffle
 
 # TODO: rewrite most/all of this file into a class so multiple instances can be used
 
 DEBUG = False
 DICTIONARY = './data/pokemon.csv'
-MAX_UNIQUE_CHARACTERS = 8
-MIN_RESULTS_COUNT = 4
-GENERATION_MAX_ATTEMPTS = 10000 # clients should re-attempt with an exponential decay
+MIN_RESULTS_COUNT = 3
 ALPHANUM_LOWER = string.ascii_lowercase + string.digits # represents the normalized search space
 
 sorted_trie = {}
@@ -60,30 +58,43 @@ with open(DICTIONARY) as file:
   for line in file:
     process_line(line.strip('\r?\n'))
 
-def randomize_chars(count):
-  chars = ''
-  while count > 0:
-    chars += choice(ALPHANUM_LOWER)
-    count -= 1
-  return chars
+def find_challenge(min_word_count=MIN_RESULTS_COUNT):
+  source = ''
+  indexes = []
+  with open(DICTIONARY) as file:
+    size = len(file.readlines())
+    indexes = list(range(0, size))
+    shuffle(indexes)
+    idx = indexes.pop()
+    for line in file:
+      if idx > 0:
+        idx -= 1
+      else:
+        source = get_unique_chars(normalize_input(line.strip('\r?\n')))
+        break
 
-def find_challenge(max_char_count=MAX_UNIQUE_CHARACTERS, min_words=MIN_RESULTS_COUNT):
-  # brute force random character sets until requirements are met or max attempts is reached
-  attempts = 0
-  while attempts < GENERATION_MAX_ATTEMPTS:
-    chars = randomize_chars(max_char_count)
-    anagrams = find_anagrams(chars)
-    if len(anagrams) >= min_words:
-      break
-    attempts += 1
-  all_matches_str = ''.join([anagram['word'] for anagram in anagrams])
-  letters = get_unique_chars(all_matches_str)
+  anagrams = find_anagrams(source)
+  additions = ''
+  while len(anagrams) < min_word_count and len(indexes) > 0:
+    idx = indexes.pop()
+    with open(DICTIONARY) as file:
+      for line in file:
+        if idx > 0:
+          idx -= 1
+        else:
+          additions = get_unique_chars(normalize_input(line.strip('\r?\n')))
+          anagrams = find_anagrams(source + additions)
+          break
+
+  letters = get_unique_chars(source + additions)
   punctuation = ''.join(list(set(
-    [char for char in all_matches_str if char not in ALPHANUM_LOWER])))
-  if anagrams:
-    return (letters, anagrams, punctuation)
-  raise Exception('Could not satisfy challenge requirements with given dictionary'
-                 f' (attempted {attempts} times)')
+    [char for char in ''.join([answer['word'] for answer in anagrams])
+                   if char not in ALPHANUM_LOWER]
+  )))
+  return (letters, anagrams, punctuation)
+
+
+
 
 if DEBUG:
   exact_anagrams = [(chars, words) for chars, words in baskets.items() if len(words) > 1]

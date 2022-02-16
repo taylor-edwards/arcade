@@ -7,13 +7,11 @@ DICTIONARIES = {
     'pokemon': {
         'app_name': 'Spell that Pokémon!',
         'filename': 'pokemon.csv',
-        'max_unique_characters': 10,
         'min_results_count': 3
     },
     'cities': {
         'app_name': 'City Spellers',
         'filename': 'cities.csv',
-        'max_unique_characters': 12,
         'min_results_count': 3
     }
 }
